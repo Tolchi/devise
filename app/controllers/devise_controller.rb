@@ -150,11 +150,13 @@ MESSAGE
   # Please refer to README or en.yml locale file to check what messages are
   # available.
   def set_flash_message(key, kind, options = {})
-    message = find_message(kind, options)
-    if options[:now]
-      flash.now[key] = message if message.present?
-    else
-      flash[key] = message if message.present?
+    unless Rails.application.config.api_only
+      message = find_message(kind, options)
+      if options[:now]
+        flash.now[key] = message if message.present?
+      else
+        flash[key] = message if message.present?
+      end
     end
   end
 
